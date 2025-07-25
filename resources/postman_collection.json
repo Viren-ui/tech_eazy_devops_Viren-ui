@@ -1,0 +1,19 @@
+{
+	"info": {
+		"_postman_id": "eeeefd47-77e3-495d-b3a9-9d995500b8d4",
+		"name": "Techeazy Devops",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47042997",
+		"_collection_link": "https://virendra-kashyap-9101341.postman.co/workspace/Virendra-Kashyap's-Workspace~d8eccb47-446b-46b2-8019-ed79c4c37400/collection/47042997-eeeefd47-77e3-495d-b3a9-9d995500b8d4?action=share&source=collection_link&creator=47042997"
+	},
+	"item": [
+		{
+			"name": "parcel",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
