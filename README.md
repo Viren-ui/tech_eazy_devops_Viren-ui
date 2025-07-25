@@ -1,7 +1,6 @@
-````markdown
 # 🚀 Techeazy DevOps Assignment 3 - Fully Automated EC2 App Deployment
 
-This project automates the complete deployment of a Spring Boot application on an AWS EC2 instance using **Terraform** and **GitHub Actions**. It ensures all logs are stored in **S3**, enforces proper IAM roles, and the deployment is triggered seamlessly on every push or via the GitHub Actions UI — no manual steps needed!
+This project automates the complete deployment of a Spring Boot application on an AWS EC2 instance using **Terraform** and **GitHub Actions**. It ensures logs are stored in **S3**, enforces proper IAM roles, and the deployment is triggered seamlessly on every push or via the GitHub Actions UI — no manual steps needed!
 
 ---
 
@@ -16,7 +15,8 @@ This project automates the complete deployment of a Spring Boot application on a
 - 📁 **Logs automatically uploaded to S3**:
   - `/app/logs/app.log`
   - `/system/cloud-init.log`
-- 🗑️ **S3 Lifecycle Rule**: Logs are auto-deleted after 7 days
+- 🗑️ **S3 Lifecycle Rule**: Logs auto-delete after 7 days
+- 🛢️ **Persistent H2 Database** (file-based)
 
 ---
 
@@ -28,9 +28,35 @@ Before deployment, ensure:
 2. Add these secrets:
    - `AWS_ACCESS_KEY_ID`
    - `AWS_SECRET_ACCESS_KEY`
-   - `INSTANCE_KEY` #for this the value is all the content of your key pair.
+   - `INSTANCE_KEY` — content of your `.pem` EC2 SSH key
 
 3. These credentials must have permissions for EC2, S3, and IAM resource management.
+
+---
+
+## ⚙️ Application Configuration
+
+The app uses a **file-based H2 database** located at `./data/parceldb`.
+
+Ensure the following in `application.properties`:
+
+```properties
+spring.application.name=techeazy-devops
+server.port=8080
+stage.name=${STAGE:dev}
+
+spring.datasource.url=jdbc:h2:file:./data/parceldb;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE;IFEXISTS=TRUE
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=create
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+spring.h2.console.settings.web-allow-others=true
+```
 
 ---
 
@@ -72,4 +98,4 @@ After deployment:
 5. Visit [http://YOUR_PUBLIC_IP](http://YOUR_PUBLIC_IP) in your browser — you should see the app running! 🎉
 
 ---
-````
+
